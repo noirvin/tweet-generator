@@ -8,7 +8,7 @@ def create_sentence(word_num):
 
     for _ in range(word_num):
 
-        word_list.append(generate_random_word('../Code/test.txt'))
+        word_list.append(generate_random_word('test.txt'))
 
     sentence = ""
     for word in word_list:
