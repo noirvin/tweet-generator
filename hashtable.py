@@ -61,7 +61,7 @@ class HashTable(object):
         # TODO: Count number of key-value entries in each bucket
         sum = 0
         for bucket in self.buckets:
-            for key in bucket.keys():
+            for key in bucket.items():
 
                 sum+=1
         return sum
@@ -73,7 +73,7 @@ class HashTable(object):
         bucket_loc = self._bucket_index(key)
         bucket = self.buckets[bucket_loc]
         # TODO: Check if key-value entry exists in bucket
-        if key in bucket.keys():
+        if bucket.find(lambda item: item[0] == key)!=None:
             return True
         else:
             return False
@@ -93,7 +93,7 @@ class HashTable(object):
         # TODO: Otherwise, raise error to tell user get failed
         else:
 
-            KeyError('Key not found: {}'.format(key))
+            raise KeyError('Key not found: {}'.format(key))
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
