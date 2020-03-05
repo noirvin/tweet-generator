@@ -112,34 +112,34 @@ class LinkedList(object):
         TODO: Worst case running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes to find one whose data matches given item
         current_node = self.head
-
-        if current_node.data == item:
-
-            self.head = current_node.next
-
-            if current_node.next is None:
-                self.tail = None
-            return
         previous_node = None
 
-
-        while current_node is not None:
+        while current_node != None:
             if current_node.data == item:
 
-                if current_node.next == None:
+                if previous_node is None:
 
+                    self.head = current_node.next
+
+                    if current_node.next is None:
+
+                        self.tail = previous_node
+                elif current_node.next == None:
+
+                    previous_node.next = None
                     self.tail = previous_node
 
-
-                previous_node.next = current_node.next
+                else:
+                    previous_node.next = current_node.next
+                self.size-=1    
                 return
 
+            else:
 
+                previous_node = current_node
 
+                current_node = current_node.next
 
-
-            previous_node = current_node
-            current_node = current_node.next
 
         raise ValueError('Item not found: {}'.format(item))
 
