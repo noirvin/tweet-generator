@@ -9,6 +9,7 @@ class HashTable(object):
         """Initialize this hash table with the given initial size."""
         # Create a new list (used as fixed-size array) of empty linked lists
         self.buckets = [LinkedList() for _ in range(init_size)]
+        self.size = 0
 
     def __str__(self):
         """Return a formatted string representation of this hash table."""
@@ -59,12 +60,7 @@ class HashTable(object):
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all buckets
         # TODO: Count number of key-value entries in each bucket
-        sum = 0
-        for bucket in self.buckets:
-            for key in bucket.items():
-
-                sum+=1
-        return sum
+        return self.size
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
@@ -106,21 +102,32 @@ class HashTable(object):
         # TODO: Check if key-value entry exists in bucket
         if target_node!=None:
             bucket.delete(target_node)
+
             bucket.append((key,value))
+            self.size+=1
 
         # TODO: If found, update value associated with given key
         else:
             bucket.append((key,value))
+            self.size+=1
         # TODO: Otherwise, insert given key-value entry into bucket
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Find bucket where given key belongs
+        bucket_loc = self._bucket_index(key)
+        bucket = self.buckets[bucket_loc]
+        target_node = bucket.find(lambda item: item [0] == key)
         # TODO: Check if key-value entry exists in bucket
+        if target_node!=None:
+            bucket.delete(target_node)
+            self.size-=1
         # TODO: If found, delete entry associated with given key
         # TODO: Otherwise, raise error to tell user delete failed
-        # Hint: raise KeyError('Key not found: {}'.format(key))
+        else:
+
+            raise KeyError('Key not found: {}'.format(key))
 
 
 def test_hash_table():
