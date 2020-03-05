@@ -1,12 +1,12 @@
 #!python
-
-from __future__ import division, print_function  # Python 2 and 3 compatibility
+from __future__ import division, print_function
+import random # Python 2 and 3 compatibility
 
 
 class Dictogram(dict):
     """Dictogram is a histogram implemented as a subclass of the dict type."""
 
-    def __init__(self, word_list=None):
+    def __init__(self, word_list):
         """Initialize this histogram as a new dict and count given words."""
         super(Dictogram, self).__init__()  # Initialize this as a new dict
         # Add properties to track useful word counts for this histogram
@@ -34,6 +34,7 @@ class Dictogram(dict):
         else:
             return 0
 
+
 def print_histogram(word_list):
     print('word list: {}'.format(word_list))
     # Create a dictogram and display its contents
@@ -45,6 +46,21 @@ def print_histogram(word_list):
         print('{!r} occurs {} times'.format(word, freq))
     print()
 
+def gen_rand_word(text):
+
+    text_histo = Dictogram(text.split())
+
+    random_weight = random.randint(0,(weight_sum(text_histo)))
+    print(weight_sum(text_histo))
+    threshold = 0
+    for key, value in text_histo.items():
+
+        threshold += value
+        if threshold >= random_weight:
+                return key
+def weight_sum(dictogram):
+    print(dictogram)
+    return dictogram.tokens
 
 def main():
     import sys
@@ -63,7 +79,7 @@ def main():
         woodchuck_text = ('how much wood would a wood chuck chuck'
                           ' if a wood chuck could chuck wood')
         print_histogram(woodchuck_text.split())
-
+        print(gen_rand_word(fish_text))
 
 if __name__ == '__main__':
     main()
