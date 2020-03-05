@@ -1,6 +1,7 @@
 import random
 from dictogram import Dictogram
 
+
 class MarkovChain:
 
     def __init__(self, word_list):
