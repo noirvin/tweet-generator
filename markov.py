@@ -1,4 +1,4 @@
-
+import random
 from dictogram import Dictogram
 
 class MarkovChain:
@@ -33,7 +33,19 @@ class MarkovChain:
     def walk(self, num_words):
         #TODO: generate a sentence num_words long using the markov chain
         sentence =[]
-        
+        word = self.first_word
+
+        for _ in range(num_words):
+            chain = self.markov_chain[word]
+            next_word = chain.gen_rand_word()
+            sentence.append(next_word)
+            word = next_word
+
+        string_sentence = " ".join(sentence)
+
+        return string_sentence
+
+
 
     def print_chain(self):
         for word, histogram in self.markov_chain.items():

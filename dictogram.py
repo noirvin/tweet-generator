@@ -13,26 +13,40 @@ class Dictogram(dict):
         self.types = 0  # Count of distinct word types in this histogram
         self.tokens = 0  # Total count of all word tokens in this histogram
         # Count words in given list, if any
+        self.dictionary_histogram = dict()
         if word_list is not None:
             for word in word_list:
+
                 self.add_count(word)
 
-    def add_count(self, word, count=1):
-        """Increase frequency count of given word by given count amount."""
-        # TODO: Increase word frequency by count
-        if self.get(word,0) == 0:
-            self.types+=1
-        self[word] = self.get(word,0)+count
 
-        self.tokens+=count
+
+    def add_count(self, word, count=1):
+        """ increase the frequency of a word by count"""
+        if word in self.dictionary_histogram:
+            self.dictionary_histogram[word] += count
+        else:
+            self.dictionary_histogram[word] = count
+            self.types += 1
+
+        self.tokens += count
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency count
-        if word in self.keys():
-            return self.get(word,0)
+        if word in self.dictionary_histogram.keys():
+            return self.dictionary_histogram[word]
         else:
             return 0
+    def gen_rand_word(self):
+
+        random_weight = random.randint(0,(weight_sum(self)))
+        threshold = 0
+        for key, value in self.dictionary_histogram.items():
+
+            threshold += value
+            if threshold >= random_weight:
+                return key
 
 
 def print_histogram(word_list):
@@ -46,21 +60,12 @@ def print_histogram(word_list):
         print('{!r} occurs {} times'.format(word, freq))
     print()
 
-def gen_rand_word(text):
 
-    text_histo = Dictogram(text.split())
-
-    random_weight = random.randint(0,(weight_sum(text_histo)))
-    print(weight_sum(text_histo))
-    threshold = 0
-    for key, value in text_histo.items():
-
-        threshold += value
-        if threshold >= random_weight:
-                return key
 def weight_sum(dictogram):
-    print(dictogram)
-    return dictogram.tokens
+    sum=0
+    for key, val in dictogram.items():
+        sum+=val
+    return sum
 
 def main():
     import sys
@@ -79,7 +84,11 @@ def main():
         woodchuck_text = ('how much wood would a wood chuck chuck'
                           ' if a wood chuck could chuck wood')
         print_histogram(woodchuck_text.split())
-        print(gen_rand_word(fish_text))
+        dict_test = Dictogram(woodchuck_text.split())
+        
+        random_word = dict_test.gen_rand_word()
+        print(random_word)
+
 
 if __name__ == '__main__':
     main()
