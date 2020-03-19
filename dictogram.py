@@ -40,7 +40,7 @@ class Dictogram(dict):
             return 0
     def gen_rand_word(self):
 
-        random_weight = random.randint(0,(weight_sum(self)))
+        random_weight = random.randint(0,(weight_sum(self.dictionary_histogram)))
         threshold = 0
         for key, value in self.dictionary_histogram.items():
 
@@ -65,6 +65,7 @@ def weight_sum(dictogram):
     sum=0
     for key, val in dictogram.items():
         sum+=val
+    print(sum)
     return sum
 
 def main():
@@ -85,7 +86,7 @@ def main():
                           ' if a wood chuck could chuck wood')
         print_histogram(woodchuck_text.split())
         dict_test = Dictogram(woodchuck_text.split())
-        
+
         random_word = dict_test.gen_rand_word()
         print(random_word)
 
